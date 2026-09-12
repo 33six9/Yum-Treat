@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-cream text-ink-900 font-body antialiased;
+}
+
+h1, h2, h3, h4 {
+  @apply font-display;
+}
+
+::selection {
+  @apply bg-ember-400/30 text-ink-950;
+}
+
+.container-x {
+  @apply mx-auto w-full max-w-7xl px-5 sm:px-8;
+}
+
+.btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+.btn-primary {
+  @apply btn bg-ember-500 text-white shadow-glow hover:bg-ember-600 hover:-translate-y-0.5 active:translate-y-0;
+}
+
+.btn-outline {
+  @apply btn border-2 border-ink-900/10 text-ink-900 hover:border-ember-500 hover:text-ember-600;
+}
+
+.btn-ghost-light {
+  @apply btn border-2 border-white/25 text-white hover:bg-white hover:text-ink-950;
+}
+
+.badge {
+  @apply inline-flex items-center gap-1 rounded-full bg-ember-500/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-ember-700;
+}
+
+.card {
+  @apply rounded-3xl bg-white shadow-soft ring-1 ring-black/5;
+}
+
+.section-pad {
+  @apply py-16 sm:py-24;
+}
+
+.input-field {
+  @apply w-full rounded-2xl border border-ink-900/10 bg-white px-4 py-3 text-sm text-ink-900 placeholder:text-ink-900/40 focus:border-ember-500 focus:outline-none focus:ring-2 focus:ring-ember-500/20;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
