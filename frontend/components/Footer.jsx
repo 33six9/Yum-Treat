@@ -10,13 +10,9 @@ export default function Footer() {
     <footer className="bg-ink-950 text-white/70">
       <StaggerReveal className="container-x grid gap-12 py-16 sm:grid-cols-2 lg:grid-cols-4">
         <StaggerItem>
-            <Link href="/" className="flex items-center">
-  <img
-    src="/logo.png"
-    alt="YumTreat logo"
-    className="h-12 w-12 object-contain"
-  />
-</Link>
+          <Link href="/" className="flex items-center gap-2 font-display text-2xl font-extrabold text-white">
+           
+            Yum<span className="text-ember-500">Treat</span>
           </Link>
           <p className="mt-4 max-w-xs text-sm leading-relaxed">
             Scratch-made comfort food, fired up fast and delivered hot. Order online or book a table for the full experience.
