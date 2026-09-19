@@ -21,9 +21,24 @@ const allowedOrigins = (process.env.CORS_ORIGIN || "http://localhost:5173")
     .split(",")
     .map((origin) => origin.trim());
 
+// Matches http(s)://localhost:<any port> or http(s)://127.0.0.1:<any port> —
+// covers Flutter web (flutter run -d chrome, random port each run), Vite,
+// Next.js, etc. without needing CORS_ORIGIN updated every time a dev tool
+// picks a new port.
+const isLocalDevOrigin = (origin) => /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin);
+
 app.use(
     cors({
-        origin: allowedOrigins,
+        origin: (origin, callback) => {
+            // No Origin header at all = same-origin request, server-to-server
+            // call, curl, or a native mobile app (not subject to browser CORS
+            // anyway) — always allow.
+            if (!origin) return callback(null, true);
+            if (allowedOrigins.includes(origin) || isLocalDevOrigin(origin)) {
+                return callback(null, true);
+            }
+            return callback(new Error(`Not allowed by CORS: ${origin}`));
+        },
         credentials: true,
     })
 );

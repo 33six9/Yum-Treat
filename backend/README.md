@@ -27,17 +27,7 @@ Edit `.env`:
 - `ADMIN_EMAILS` — comma-separated emails that get promoted to the `admin`
   role automatically the first time (or next time) they sign in.
 
-Seed the database with categories and ~50 food items:
-
-```bash
-npm run seed
-```
-
-There's no user seeding step anymore — create an account through the
-frontend's sign-up/Google sign-in, then add that email to `ADMIN_EMAILS`
-in `.env` (and sign in again) to make it an admin.
-
-Run the server:
+Run the server — that's it, no separate seed step needed:
 
 ```bash
 npm run dev      # with nodemon, auto-restarts on changes
@@ -45,7 +35,23 @@ npm run dev      # with nodemon, auto-restarts on changes
 npm start
 ```
 
-The API listens on `http://localhost:5000` by default.
+The API listens on `http://localhost:5000` by default. On startup, if the
+database is completely empty, it automatically seeds ~7 categories and ~54
+food items for you — you'll see `Database was empty — auto-seeded...` in
+the logs the first time. It's a no-op on every subsequent restart once data
+exists, so it's always safe to leave running.
+
+There's no user seeding step either — create an account through the
+frontend's sign-up/Google sign-in, then add that email to `ADMIN_EMAILS`
+in `.env` (and sign in again) to make it an admin.
+
+If you ever want to reset back to the demo data on purpose (wipe +
+re-populate), the standalone script is still there:
+
+```bash
+npm run seed            # wipe + re-populate categories/foods
+npm run seed:destroy    # wipe categories/foods, leave the database empty
+```
 
 ## How auth works
 
@@ -80,7 +86,7 @@ The API listens on `http://localhost:5000` by default.
 | PATCH  | `/api/orders/complete/:id`          | Bearer      | customer confirms receipt |
 | GET    | `/api/reviews/`                     | Bearer      | all reviews |
 | GET    | `/api/reviews/user/:userID`         | Bearer      | reviews by a user |
-| GET    | `/api/reviews/product/:productID`   | Bearer      | reviews for a food item |
+| GET    | `/api/reviews/product/:productID`   | –           | reviews for a food item (public, so guests can see reviews on a dish page) |
 | POST   | `/api/reviews/` or `/add-review`    | Bearer      | add a review |
 
 `Bearer` = send `Authorization: Bearer <firebaseIdToken>`.
